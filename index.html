@@ -1,0 +1,2109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aditya Shaurya</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Pacifico&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Bebas+Neue&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================
+   OBRA LETRA-INSPIRED STYLE (ultra bold display)
+   + Caveat as handwritten
+   ============================================ */
+
+:root {
+  --paper: #f5f0e8;
+  --paper-dark: #ede8db;
+  --paper-warm: #f0ebe0;
+  --ink: #1a1610;
+  --ink-light: #3d3830;
+  --pencil: #7a7268;
+  --pencil-light: #b0a898;
+  --red-ink: #c0392b;
+  --blue-ink: #2c4a7c;
+  --yellow-sticky: #f5e642;
+  --green-ink: #2d6a4f;
+  --tape: rgba(180, 165, 130, 0.4);
+  --shadow: rgba(26, 22, 16, 0.12);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  cursor: none;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* CUSTOM CURSOR */
+.cursor {
+  width: 12px;
+  height: 12px;
+  background: var(--ink);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s ease, width 0.2s ease, height 0.2s ease;
+  mix-blend-mode: multiply;
+}
+
+.cursor-trail {
+  width: 30px;
+  height: 30px;
+  border: 1.5px solid var(--pencil);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: all 0.15s ease;
+  mix-blend-mode: multiply;
+}
+
+body:hover .cursor { opacity: 1; }
+
+/* PAPER TEXTURE */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: 
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 31px,
+      rgba(26, 22, 16, 0.04) 31px,
+      rgba(26, 22, 16, 0.04) 32px
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* NOTEBOOK SPINE */
+body::after {
+  content: '';
+  position: fixed;
+  left: 60px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: rgba(192, 57, 43, 0.25);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ============================================
+   NAVIGATION
+   ============================================ */
+
+nav {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 100;
+  padding: 24px 40px;
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+
+.nav-link {
+  font-family: 'Caveat', cursive;
+  font-size: 16px;
+  color: var(--pencil);
+  text-decoration: none;
+  position: relative;
+  transition: color 0.2s ease;
+  cursor: none;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background: var(--ink);
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover { color: var(--ink); }
+.nav-link:hover::after { width: 100%; }
+
+/* ============================================
+   SECTION BASE
+   ============================================ */
+
+section {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  padding: 80px 100px 80px 120px;
+}
+
+/* ============================================
+   HERO SECTION
+   ============================================ */
+
+#hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.hero-eyebrow {
+  font-family: 'Caveat', cursive;
+  font-size: 18px;
+  color: var(--pencil);
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: fadeSlideUp 0.6s ease 0.3s forwards;
+  position: relative;
+  display: inline-block;
+}
+
+.hero-eyebrow::before {
+  content: '→';
+  margin-right: 8px;
+  display: inline-block;
+  animation: arrowPulse 2s ease infinite;
+}
+
+.hero-name {
+  font-family: 'Pacifico', cursive;
+  font-size: clamp(60px, 10vw, 148px);
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  opacity: 0;
+  animation: revealInk 1.2s ease 0.5s forwards;
+  position: relative;
+  display: block;
+}
+
+.hero-name-second {
+  font-family: 'Pacifico', cursive;
+  font-size: clamp(42px, 7vw, 96px);
+  line-height: 1.05;
+  color: var(--ink);
+  opacity: 0;
+  animation: revealInk 1.2s ease 0.8s forwards;
+  position: relative;
+  display: block;
+  margin-left: 48px;
+}
+
+.hero-scribble-underline {
+  position: absolute;
+  bottom: -12px;
+  left: 0;
+  width: 0;
+  height: 6px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 12' preserveAspectRatio='none'%3E%3Cpath d='M0 8 Q30 2 60 8 Q90 14 120 7 Q150 0 180 8 Q210 16 240 7 Q270 0 300 8' stroke='%23c0392b' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") repeat-x center;
+  background-size: 300px 12px;
+  animation: drawLine 0.8s ease 1.8s forwards;
+}
+
+.hero-descriptor {
+  margin-top: 40px;
+  max-width: 480px;
+  opacity: 0;
+  animation: fadeSlideUp 0.6s ease 1.4s forwards;
+}
+
+.hero-descriptor p {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--ink-light);
+  font-weight: 300;
+}
+
+.hero-descriptor p em {
+  font-style: italic;
+  font-family: 'Playfair Display', serif;
+}
+
+/* FLOATING DOODLES IN HERO */
+.hero-doodle {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0;
+  animation: floatIn 1s ease forwards;
+}
+
+.doodle-star {
+  top: 15%;
+  right: 15%;
+  animation-delay: 2s;
+  transform-origin: center;
+  animation: floatIn 1s ease 2s forwards, slowRotate 20s linear infinite 3s;
+}
+
+.doodle-arrow {
+  top: 45%;
+  right: 22%;
+  animation-delay: 1.8s;
+  animation: floatIn 1s ease 1.8s forwards;
+}
+
+.doodle-circle {
+  bottom: 25%;
+  right: 8%;
+  animation-delay: 2.2s;
+  animation: floatIn 1s ease 2.2s forwards, bobFloat 4s ease-in-out infinite 3.2s;
+}
+
+.doodle-scribble1 {
+  top: 20%;
+  right: 35%;
+  animation-delay: 2.5s;
+  animation: floatIn 1s ease 2.5s forwards;
+}
+
+.hero-side-note {
+  position: absolute;
+  right: 60px;
+  top: 50%;
+  transform: translateY(-50%) rotate(2deg);
+  max-width: 160px;
+  opacity: 0;
+  animation: fadeSlideUp 0.8s ease 2.8s forwards;
+}
+
+.side-note-inner {
+  font-family: 'Caveat', cursive;
+  font-size: 14px;
+  color: var(--pencil);
+  line-height: 1.5;
+  padding: 12px 14px;
+  background: rgba(245, 240, 232, 0.8);
+  border-left: 2px solid var(--pencil-light);
+  transform: rotate(-1deg);
+}
+
+/* ============================================
+   SECTION DIVIDER - PENCIL LINE
+   ============================================ */
+
+.divider-pencil {
+  width: 100%;
+  height: 40px;
+  position: relative;
+  overflow: visible;
+  margin: 0;
+}
+
+.divider-pencil svg {
+  width: 100%;
+  height: 40px;
+}
+
+/* ============================================
+   ABOUT SECTION
+   ============================================ */
+
+#about {
+  background: var(--paper);
+  position: relative;
+}
+
+.about-header {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(48px, 7vw, 90px);
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  margin-bottom: 60px;
+  position: relative;
+  display: inline-block;
+}
+
+.section-number {
+  font-family: 'Caveat', cursive;
+  font-size: 16px;
+  color: var(--pencil);
+  margin-bottom: 16px;
+  display: block;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: start;
+}
+
+/* PHOTO CUTOUT */
+.photo-cutout-wrap {
+  position: relative;
+  margin-bottom: 28px;
+}
+
+.photo-cutout {
+  width: 200px;
+  height: 200px;
+  background: var(--paper-dark);
+  border: 1.5px solid rgba(26,22,16,0.14);
+  position: relative;
+  transform: rotate(-1.5deg);
+  box-shadow: 4px 6px 18px var(--shadow), 0 0 0 6px var(--paper), 0 0 0 7px rgba(26,22,16,0.08);
+  overflow: hidden;
+  transition: transform 0.35s ease;
+  cursor: none;
+  display: inline-block;
+}
+
+.photo-cutout:hover { transform: rotate(0deg) scale(1.03); }
+
+/* jagged / torn corner bottom-right */
+.photo-cutout::after {
+  content: '';
+  position: absolute;
+  bottom: 0; right: 0;
+  width: 0; height: 0;
+  border-style: solid;
+  border-width: 0 0 28px 28px;
+  border-color: transparent transparent var(--paper) transparent;
+  z-index: 2;
+}
+
+/* hatched placeholder area */
+.photo-cutout-inner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 6px,
+    rgba(26,22,16,0.035) 6px,
+    rgba(26,22,16,0.035) 7px
+  );
+  position: relative;
+}
+
+.photo-cutout-inner svg {
+  opacity: 0.18;
+  margin-bottom: 10px;
+}
+
+.photo-cutout-label {
+  font-family: 'Caveat', cursive;
+  font-size: 13px;
+  color: var(--pencil);
+  text-align: center;
+  line-height: 1.5;
+  padding: 0 12px;
+}
+
+/* tape on photo */
+.photo-tape {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-2deg);
+  width: 70px;
+  height: 20px;
+  background: rgba(180,165,130,0.45);
+  z-index: 3;
+}
+
+/* handwritten caption under photo */
+.photo-caption {
+  font-family: 'Caveat', cursive;
+  font-size: 13px;
+  color: var(--pencil);
+  margin-top: 12px;
+  margin-left: 12px;
+  transform: rotate(1deg);
+  display: inline-block;
+}
+
+.about-main-text {
+  position: relative;
+}
+
+.about-main-text p {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 17px;
+  line-height: 1.75;
+  color: var(--ink-light);
+  font-weight: 300;
+  margin-bottom: 20px;
+}
+
+.about-main-text p strong {
+  font-weight: 500;
+  color: var(--ink);
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+}
+
+.sticky-cluster {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.sticky-note {
+  background: var(--yellow-sticky);
+  padding: 16px 20px;
+  position: relative;
+  cursor: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 3px 4px 12px var(--shadow);
+}
+
+.sticky-note::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 28px;
+  background: rgba(0,0,0,0.07);
+}
+
+.sticky-note:nth-child(1) { transform: rotate(-1.5deg); }
+.sticky-note:nth-child(2) { transform: rotate(1deg); background: #d4f1c4; }
+.sticky-note:nth-child(3) { transform: rotate(-0.5deg); background: #ffd4d4; }
+
+.sticky-note:hover {
+  transform: rotate(0deg) scale(1.03) !important;
+  box-shadow: 6px 8px 20px var(--shadow);
+  z-index: 10;
+}
+
+.sticky-note p {
+  font-family: 'Caveat', cursive;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink);
+  margin-top: 8px;
+}
+
+.sticky-note .note-label {
+  font-family: 'Caveat', cursive;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--pencil);
+  margin-bottom: 4px;
+}
+
+/* ANNOTATION / MARGIN NOTES */
+.margin-note {
+  position: absolute;
+  font-family: 'Caveat', cursive;
+  font-size: 13px;
+  color: var(--pencil);
+  transform: rotate(-90deg);
+  white-space: nowrap;
+  opacity: 0.7;
+}
+
+.annotation-bubble {
+  display: inline-block;
+  font-family: 'Caveat', cursive;
+  font-size: 14px;
+  color: var(--red-ink);
+  padding: 4px 10px;
+  border: 1.5px solid var(--red-ink);
+  border-radius: 2px;
+  transform: rotate(-1deg);
+  position: relative;
+  cursor: none;
+  transition: all 0.2s ease;
+}
+
+.annotation-bubble:hover { background: var(--red-ink); color: white; }
+
+/* ============================================
+   SKILLS / ARTIFACTS SECTION
+   ============================================ */
+
+#skills {
+  background: var(--paper-warm);
+  position: relative;
+}
+
+.skills-header-block {
+  margin-bottom: 60px;
+}
+
+.skills-big-text {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 4vw, 52px);
+  font-style: italic;
+  color: var(--ink-light);
+  line-height: 1.3;
+  max-width: 700px;
+}
+
+.skills-big-text span {
+  font-family: 'Bebas Neue', sans-serif;
+  font-style: normal;
+  font-size: clamp(36px, 5.5vw, 72px);
+  color: var(--ink);
+  line-height: 0.9;
+}
+
+.artifacts-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  position: relative;
+}
+
+.artifact-card {
+  position: relative;
+  padding: 28px;
+  background: var(--paper);
+  border: 1.5px solid rgba(26, 22, 16, 0.12);
+  cursor: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+}
+
+.artifact-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--ink);
+  transform: translateY(100%);
+  transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  z-index: 0;
+}
+
+.artifact-card:hover::before { transform: translateY(0); }
+
+.artifact-card:hover .artifact-label,
+.artifact-card:hover .artifact-title,
+.artifact-card:hover .artifact-desc { color: var(--paper); }
+
+.artifact-card:hover .artifact-doodle { opacity: 0.15; filter: invert(1); }
+
+.artifact-card > * { position: relative; z-index: 1; }
+
+.artifact-card:nth-child(odd) { transform: rotate(-0.5deg); }
+.artifact-card:nth-child(even) { transform: rotate(0.5deg); margin-top: 8px; }
+
+.artifact-label {
+  font-family: 'Caveat', cursive;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--pencil);
+  margin-bottom: 10px;
+  transition: color 0.3s ease;
+}
+
+.artifact-title {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 10px;
+  line-height: 1.2;
+  transition: color 0.3s ease;
+}
+
+.artifact-desc {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: var(--pencil);
+  line-height: 1.6;
+  font-weight: 300;
+  transition: color 0.3s ease;
+}
+
+.artifact-doodle {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  opacity: 0.15;
+  transition: opacity 0.3s ease, filter 0.3s ease;
+}
+
+/* SCRAPBOOK STRING */
+.string-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: var(--paper);
+  border: 1px solid var(--pencil-light);
+  font-family: 'Caveat', cursive;
+  font-size: 14px;
+  color: var(--ink-light);
+  position: relative;
+  margin: 4px;
+  cursor: none;
+  transition: all 0.2s ease;
+}
+
+.string-label::after {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  width: 1px;
+  height: 20px;
+  background: var(--pencil-light);
+}
+
+.string-label:hover { background: var(--ink); color: var(--paper); }
+
+/* ============================================
+   TIMELINE SECTION
+   ============================================ */
+
+#timeline {
+  background: var(--paper);
+  position: relative;
+}
+
+.timeline-header {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(48px, 7vw, 90px);
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  margin-bottom: 80px;
+}
+
+.timeline-container {
+  position: relative;
+  padding-left: 40px;
+}
+
+/* The notebook path line */
+.timeline-path {
+  position: absolute;
+  left: 0;
+  top: 20px;
+  bottom: 20px;
+  width: 3px;
+  background: transparent;
+  border-left: 2px dashed var(--pencil-light);
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 60px;
+  padding-left: 60px;
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.timeline-item.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -7px;
+  top: 12px;
+  width: 16px;
+  height: 16px;
+  border: 2.5px solid var(--ink);
+  background: var(--paper);
+  transform: rotate(45deg);
+  transition: background 0.3s ease;
+  cursor: none;
+}
+
+.timeline-item:hover .timeline-dot { background: var(--ink); }
+
+.timeline-year {
+  font-family: 'Caveat', cursive;
+  font-size: 14px;
+  color: var(--pencil);
+  margin-bottom: 6px;
+  display: block;
+}
+
+.timeline-title {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+
+.timeline-org {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 15px;
+  color: var(--blue-ink);
+  margin-bottom: 10px;
+  display: block;
+}
+
+.timeline-desc {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  color: var(--ink-light);
+  line-height: 1.7;
+  font-weight: 300;
+  max-width: 600px;
+}
+
+.timeline-scribble-note {
+  display: inline-block;
+  font-family: 'Caveat', cursive;
+  font-size: 14px;
+  color: var(--red-ink);
+  margin-top: 8px;
+  padding: 3px 0;
+  border-bottom: 1.5px wavy var(--red-ink);
+}
+
+/* PINNED PAPER */
+.pinned-paper {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 180px;
+  background: var(--paper);
+  padding: 16px 18px;
+  box-shadow: 2px 3px 12px var(--shadow), 4px 6px 20px rgba(0,0,0,0.06);
+  transform: rotate(2.5deg);
+  cursor: none;
+  transition: transform 0.3s ease;
+  border: 0.5px solid rgba(26,22,16,0.08);
+}
+
+.pinned-paper::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 18px;
+  height: 18px;
+  background: var(--red-ink);
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(192,57,43,0.4);
+}
+
+.pinned-paper:hover { transform: rotate(0deg) scale(1.02); }
+
+.pinned-paper p {
+  font-family: 'Caveat', cursive;
+  font-size: 14px;
+  color: var(--ink-light);
+  line-height: 1.55;
+}
+
+/* ============================================
+   PROJECTS SECTION
+   ============================================ */
+
+#projects {
+  background: var(--paper-dark);
+  position: relative;
+}
+
+.projects-intro {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(22px, 3vw, 38px);
+  font-style: italic;
+  color: var(--ink-light);
+  max-width: 600px;
+  margin-bottom: 70px;
+  line-height: 1.4;
+}
+
+.case-files {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+.case-file {
+  position: relative;
+  cursor: none;
+  group: true;
+}
+
+.case-file-inner {
+  background: var(--paper);
+  border: 1px solid rgba(26, 22, 16, 0.1);
+  padding: 36px 32px;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+}
+
+.case-file-inner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--pencil-light);
+}
+
+.case-file:nth-child(1) .case-file-inner::before { background: var(--red-ink); }
+.case-file:nth-child(2) .case-file-inner::before { background: var(--blue-ink); }
+.case-file:nth-child(3) .case-file-inner::before { background: var(--green-ink); }
+.case-file:nth-child(4) .case-file-inner::before { background: #c77b2a; }
+
+.case-file-inner:hover {
+  transform: translateY(-6px) rotate(-0.5deg);
+  box-shadow: 6px 12px 30px var(--shadow);
+}
+
+.case-tag {
+  font-family: 'Caveat', cursive;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--pencil);
+  margin-bottom: 14px;
+  display: block;
+}
+
+.case-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 32px;
+  letter-spacing: 0.03em;
+  color: var(--ink);
+  margin-bottom: 14px;
+  line-height: 1;
+}
+
+.case-desc {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  color: var(--ink-light);
+  line-height: 1.7;
+  font-weight: 300;
+  margin-bottom: 20px;
+}
+
+.case-hidden-note {
+  font-family: 'Caveat', cursive;
+  font-size: 14px;
+  color: var(--pencil);
+  padding: 10px 0;
+  border-top: 1px dashed var(--pencil-light);
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 0.4s ease, max-height 0.4s ease;
+}
+
+.case-file-inner:hover .case-hidden-note {
+  opacity: 1;
+  max-height: 60px;
+}
+
+.case-arrow {
+  font-family: 'Caveat', cursive;
+  font-size: 22px;
+  color: var(--ink);
+  position: absolute;
+  bottom: 20px;
+  right: 24px;
+  transition: transform 0.3s ease;
+}
+
+.case-file-inner:hover .case-arrow { transform: translate(4px, -2px); }
+
+/* TORN PAPER EFFECT */
+.torn-edge {
+  width: 100%;
+  height: 30px;
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+}
+
+.torn-edge svg { width: 100%; height: 30px; }
+
+/* ============================================
+   CONTACT SECTION — LAST PAGE
+   ============================================ */
+
+#contact {
+  background: var(--paper);
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+.contact-last-page {
+  position: relative;
+}
+
+.contact-big-serif {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(36px, 6vw, 80px);
+  color: var(--ink);
+  font-style: italic;
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+
+.contact-big-serif strong {
+  font-style: normal;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(54px, 9vw, 120px);
+  line-height: 0.85;
+  display: block;
+  letter-spacing: 0.01em;
+}
+
+.contact-links {
+  margin-top: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: center;
+}
+
+.contact-link-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-decoration: none;
+  cursor: none;
+  group: true;
+}
+
+.contact-link-label {
+  font-family: 'Caveat', cursive;
+  font-size: 13px;
+  color: var(--pencil);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.contact-link-value {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 18px;
+  color: var(--ink);
+  font-weight: 400;
+  border-bottom: 1.5px solid transparent;
+  transition: border-color 0.2s ease;
+  padding-bottom: 2px;
+}
+
+.contact-link-item:hover .contact-link-value {
+  border-color: var(--ink);
+}
+
+.contact-signoff {
+  position: absolute;
+  bottom: 60px;
+  right: 60px;
+  text-align: right;
+}
+
+.contact-signoff p {
+  font-family: 'Caveat', cursive;
+  font-size: 28px;
+  color: var(--ink);
+  line-height: 1.4;
+}
+
+.contact-signoff .signoff-small {
+  font-size: 14px;
+  color: var(--pencil);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  margin-top: 8px;
+}
+
+/* FINAL PAGE DOODLES */
+.final-doodle {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0.35;
+}
+
+/* ============================================
+   SCATTERED SIDE NOTES
+   ============================================ */
+
+.floating-sidenote {
+  position: absolute;
+  font-family: 'Caveat', cursive;
+  font-size: 13px;
+  color: var(--pencil);
+  max-width: 140px;
+  line-height: 1.5;
+  pointer-events: none;
+}
+
+.floating-sidenote.right-edge {
+  right: 16px;
+  writing-mode: horizontal-tb;
+}
+
+/* ============================================
+   SECTION TRANSITIONS
+   ============================================ */
+
+.section-break {
+  position: relative;
+  height: 60px;
+  overflow: visible;
+  z-index: 3;
+}
+
+/* ============================================
+   SCROLL REVEAL
+   ============================================ */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes revealInk {
+  from { 
+    opacity: 0; 
+    clip-path: inset(0 100% 0 0); 
+  }
+  to   { 
+    opacity: 1; 
+    clip-path: inset(0 0% 0 0); 
+  }
+}
+
+@keyframes drawLine {
+  from { width: 0; }
+  to   { width: 100%; }
+}
+
+@keyframes arrowPulse {
+  0%, 100% { transform: translateX(0); }
+  50%       { transform: translateX(5px); }
+}
+
+@keyframes floatIn {
+  from { opacity: 0; transform: scale(0.8) rotate(-5deg); }
+  to   { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+@keyframes slowRotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes bobFloat {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50%       { transform: translateY(-12px) rotate(3deg); }
+}
+
+@keyframes drawPath {
+  from { stroke-dashoffset: 1000; }
+  to   { stroke-dashoffset: 0; }
+}
+
+@keyframes penDraw {
+  from { stroke-dashoffset: 500; opacity: 0; }
+  to   { stroke-dashoffset: 0; opacity: 1; }
+}
+
+@keyframes inkSpread {
+  from { transform: scaleX(0); transform-origin: left; }
+  to   { transform: scaleX(1); transform-origin: left; }
+}
+
+/* ============================================
+   PAGE PROGRESS
+   ============================================ */
+
+.page-progress {
+  position: fixed;
+  left: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+}
+
+.progress-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--pencil-light);
+  cursor: none;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.progress-dot.active {
+  background: var(--ink);
+  transform: scale(1.5);
+}
+
+.progress-dot::before {
+  content: attr(data-label);
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: 'Caveat', cursive;
+  font-size: 12px;
+  color: var(--pencil);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.progress-dot:hover::before { opacity: 1; }
+
+/* ============================================
+   RESPONSIVE — MOBILE FIRST
+   ============================================ */
+
+/* Hide custom cursor on touch devices */
+@media (hover: none) {
+  .cursor, .cursor-trail { display: none !important; }
+  html { cursor: auto; }
+  body, a, button, .sticky-note, .artifact-card, .case-file-inner,
+  .nav-link, .string-label, .photo-cutout, .timeline-dot,
+  .pinned-paper, .annotation-bubble { cursor: auto !important; }
+}
+
+/* ---- TABLET ---- */
+@media (max-width: 1024px) {
+  section { padding: 70px 60px 70px 90px; }
+  .artifacts-grid { grid-template-columns: 1fr 1fr; }
+  .pinned-paper { right: -10px; width: 160px; }
+}
+
+/* ---- MOBILE LARGE ---- */
+@media (max-width: 768px) {
+  /* Spine moves to far left */
+  body::after { left: 16px; }
+
+  /* Section padding — breathing room left of spine */
+  section { padding: 56px 20px 64px 36px; }
+
+  /* NAV — hamburger-style compact row */
+  nav {
+    padding: 14px 16px;
+    gap: 14px;
+    background: rgba(245,240,232,0.95);
+    backdrop-filter: blur(6px);
+    width: 100%;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    border-bottom: 1px solid rgba(26,22,16,0.06);
+  }
+  .nav-link { font-size: 15px; }
+
+  /* Progress dots — hide on mobile (clutter) */
+  .page-progress { display: none; }
+
+  /* HERO adjustments */
+  #hero { padding-top: 80px; min-height: 100svh; }
+  .hero-eyebrow { font-size: 15px; }
+  .hero-name { font-size: clamp(52px, 14vw, 80px); }
+  .hero-name-second { font-size: clamp(36px, 10vw, 56px); margin-left: 20px; }
+  .hero-descriptor { margin-top: 28px; max-width: 100%; }
+  .hero-descriptor p { font-size: 15px; }
+  .hero-side-note { display: none; }
+  .doodle-star, .doodle-arrow, .doodle-circle, .doodle-scribble1 { display: none; }
+  .obra-text { display: none; }
+
+  /* ABOUT */
+  .about-header { font-size: clamp(36px, 10vw, 58px); margin-bottom: 36px; }
+  .about-grid { grid-template-columns: 1fr; gap: 32px; }
+
+  /* Photo cutout — smaller on mobile */
+  .photo-cutout { width: 160px; height: 160px; }
+  .photo-cutout-label { font-size: 12px; }
+
+  .about-main-text p { font-size: 15px; }
+
+  /* Sticky cluster — stack naturally */
+  .sticky-cluster { gap: 16px; }
+  .sticky-note p { font-size: 14px; }
+  .sticky-note:nth-child(1) { transform: rotate(-0.8deg); }
+  .sticky-note:nth-child(2) { transform: rotate(0.5deg); }
+  .sticky-note:nth-child(3) { transform: rotate(-0.3deg); }
+
+  /* Floating sidenotes — hide on mobile (too cramped) */
+  .floating-sidenote { display: none; }
+
+  /* SKILLS */
+  .skills-big-text { font-size: clamp(20px, 5.5vw, 34px); }
+  .skills-big-text span { font-size: clamp(28px, 7.5vw, 48px); }
+  .artifacts-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .artifact-card { padding: 18px 16px; }
+  .artifact-title { font-size: 16px; }
+  .artifact-desc { font-size: 13px; }
+  /* Reset tilt on mobile */
+  .artifact-card:nth-child(odd) { transform: none; }
+  .artifact-card:nth-child(even) { transform: none; margin-top: 0; }
+
+  /* String labels */
+  .string-label { font-size: 13px; padding: 5px 10px; }
+  .string-label::after { display: none; }
+
+  /* TIMELINE */
+  .timeline-header { font-size: clamp(36px, 10vw, 58px); margin-bottom: 48px; }
+  .timeline-container { padding-left: 28px; }
+  .timeline-item { padding-left: 40px; margin-bottom: 44px; }
+  .timeline-title { font-size: 18px; }
+  .timeline-desc { font-size: 14px; }
+  .pinned-paper { display: none; }
+
+  /* VENTURES / PROJECTS */
+  .projects-intro { font-size: clamp(18px, 4.5vw, 28px); margin-bottom: 40px; }
+  .case-files { grid-template-columns: 1fr; gap: 16px; }
+  .case-file-inner { padding: 24px 22px; }
+  .case-title { font-size: 26px; }
+  .case-desc { font-size: 14px; }
+  /* Always show hidden notes on mobile (no hover) */
+  .case-hidden-note {
+    opacity: 1 !important;
+    max-height: 80px !important;
+  }
+
+  /* CONTACT */
+  #contact { padding-top: 60px; padding-bottom: 80px; min-height: auto; }
+  .contact-big-serif { font-size: clamp(28px, 8vw, 52px); }
+  .contact-big-serif strong { font-size: clamp(44px, 12vw, 80px); }
+  .contact-links { flex-direction: column; gap: 20px; align-items: flex-start; }
+  .contact-links > div[style*="width: 1px"] { display: none; } /* hide dividers */
+  .contact-link-value { font-size: 16px; }
+  .contact-signoff {
+    position: relative;
+    bottom: auto; right: auto;
+    text-align: left;
+    margin-top: 48px;
+  }
+  .final-doodle { display: none; }
+
+  /* Section breaks */
+  .section-break { height: 36px; }
+  .torn-edge { height: 22px; }
+  .torn-edge svg { height: 22px; }
+
+  /* Annotation bubble */
+  .annotation-bubble { font-size: 13px; padding: 3px 8px; }
+}
+
+/* ---- MOBILE SMALL ---- */
+@media (max-width: 420px) {
+  section { padding: 48px 16px 56px 30px; }
+  nav { gap: 10px; }
+  .nav-link { font-size: 14px; }
+  .hero-name { font-size: clamp(44px, 15vw, 64px); }
+  .hero-name-second { font-size: clamp(30px, 10.5vw, 46px); margin-left: 14px; }
+  .about-header, .timeline-header { font-size: clamp(32px, 11vw, 48px); }
+  .artifacts-grid { grid-template-columns: 1fr; }
+  .photo-cutout { width: 140px; height: 140px; }
+  .case-title { font-size: 22px; }
+  .contact-big-serif strong { font-size: clamp(38px, 14vw, 64px); }
+}
+
+/* ============================================
+   TAPE STRIPS
+   ============================================ */
+
+.tape-strip {
+  display: inline-block;
+  background: var(--tape);
+  height: 22px;
+  width: 80px;
+  transform: rotate(-3deg);
+  position: absolute;
+  top: -11px;
+  left: 30%;
+}
+
+.tape-strip.right { left: auto; right: 30%; transform: rotate(2deg); }
+
+/* ============================================
+   HIGHLIGHT MARKS
+   ============================================ */
+
+.highlight-yellow {
+  background: linear-gradient(120deg, transparent 0%, rgba(245, 230, 66, 0.4) 10%, rgba(245, 230, 66, 0.4) 90%, transparent 100%);
+  padding: 0 4px;
+}
+
+/* ============================================
+   OBRA LETRA BOLD MOMENTS
+   ============================================ */
+
+.obra-text {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.04em;
+  font-size: clamp(80px, 14vw, 200px);
+  line-height: 0.85;
+  color: var(--ink);
+  opacity: 0.06;
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+}
+
+/* WOBBLE ON HOVER for interactive bits */
+.wobble:hover {
+  animation: wobbleAnim 0.4s ease;
+}
+
+@keyframes wobbleAnim {
+  0%   { transform: rotate(0deg); }
+  25%  { transform: rotate(-3deg) scale(1.05); }
+  75%  { transform: rotate(3deg) scale(1.05); }
+  100% { transform: rotate(0deg); }
+}
+
+/* ============================================
+   SCRIBBLE SVG DECORATIONS inline
+   ============================================ */
+
+.scribble-divider {
+  display: block;
+  margin: 0 auto;
+  opacity: 0.3;
+}
+
+</style>
+</head>
+<body>
+
+<!-- CUSTOM CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-trail" id="cursorTrail"></div>
+
+<!-- PAGE PROGRESS DOTS -->
+<div class="page-progress">
+  <div class="progress-dot active" data-section="hero" data-label="Start"></div>
+  <div class="progress-dot" data-section="about" data-label="About"></div>
+  <div class="progress-dot" data-section="skills" data-label="Craft"></div>
+  <div class="progress-dot" data-section="timeline" data-label="Journey"></div>
+  <div class="progress-dot" data-section="projects" data-label="Work"></div>
+  <div class="progress-dot" data-section="contact" data-label="Talk"></div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#about" class="nav-link">About</a>
+  <a href="#skills" class="nav-link">Craft</a>
+  <a href="#timeline" class="nav-link">Journey</a>
+  <a href="#projects" class="nav-link">Work</a>
+  <a href="#contact" class="nav-link">Talk</a>
+</nav>
+
+<!-- ============================================
+     HERO
+     ============================================ -->
+
+<section id="hero">
+
+  <!-- BIG BACKGROUND OBRA TEXT -->
+  <div class="obra-text" style="bottom: -20px; right: -40px; font-size: clamp(120px, 20vw, 300px);">AS</div>
+
+  <div class="hero-eyebrow"></div>
+
+  <div style="position: relative; display: inline-block;">
+    <span class="hero-name">Aditya</span>
+    <span class="hero-name-second">Shaurya</span>
+    <div class="hero-scribble-underline" style="bottom: -8px; left: 40px; position: absolute;"></div>
+  </div>
+
+  <div class="hero-descriptor" style="margin-top: 48px;">
+    <p>
+      Strategy person. Design nerd. 
+      <em>Occasional overthinker.</em>
+      Building at the intersection of business, brand, and technology — not entirely sure where that intersection is, but getting closer.
+    </p>
+    <br>
+    <p>
+      Currently: <span class="annotation-bubble" style="margin: 0 4px;">figuring it out</span>
+    </p>
+  </div>
+
+  <!-- FLOATING DOODLES -->
+  <div class="hero-doodle doodle-star">
+    <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+      <path d="M24 4 L27.5 19 L43 19 L31 28.5 L35.5 44 L24 35 L12.5 44 L17 28.5 L5 19 L20.5 19 Z" stroke="#1a1610" stroke-width="1.5" fill="none" stroke-linejoin="round"/>
+    </svg>
+  </div>
+
+  <div class="hero-doodle doodle-arrow">
+    <svg width="80" height="40" viewBox="0 0 80 40" fill="none">
+      <path d="M8 20 Q30 8 60 20 M52 12 L60 20 L52 28" stroke="#7a7268" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="200" stroke-dashoffset="200">
+        <animate attributeName="stroke-dashoffset" from="200" to="0" dur="0.8s" begin="2s" fill="freeze"/>
+      </path>
+    </svg>
+  </div>
+
+  <div class="hero-doodle doodle-circle">
+    <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+      <circle cx="30" cy="30" r="24" stroke="#7a7268" stroke-width="1.5" fill="none" stroke-dasharray="4 4"/>
+    </svg>
+  </div>
+
+  <div class="hero-doodle doodle-scribble1">
+    <svg width="60" height="30" viewBox="0 0 60 30" fill="none">
+      <path d="M4 20 Q10 4 20 14 Q30 24 40 10 Q50 0 56 16" stroke="#c0392b" stroke-width="1.5" fill="none" stroke-linecap="round">
+        <animate attributeName="stroke-dasharray" from="0 200" to="200 0" dur="1s" begin="2.5s" fill="freeze"/>
+      </path>
+    </svg>
+  </div>
+
+  <!-- SIDE NOTE -->
+  <div class="hero-side-note">
+    <div class="side-note-inner">
+      made for people who read every word on a website.
+      <br><br>
+      if you're skimming — hi, still glad you're here.
+    </div>
+  </div>
+
+</section>
+
+<!-- SECTION TRANSITION: INK RULE -->
+<div class="section-break">
+  <svg viewBox="0 0 1200 60" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:60px;display:block;">
+    <path d="M0 30 Q200 10 400 32 Q600 54 800 28 Q1000 8 1200 30" stroke="#1a1610" stroke-width="1" fill="none" opacity="0.15" stroke-dasharray="1200" stroke-dashoffset="1200">
+      <animate attributeName="stroke-dashoffset" from="1200" to="0" dur="2s" begin="0.5s" fill="freeze"/>
+    </path>
+    <path d="M100 45 Q350 20 600 44 Q850 68 1100 42" stroke="#7a7268" stroke-width="0.5" fill="none" opacity="0.12"/>
+  </svg>
+</div>
+
+
+<!-- ============================================
+     ABOUT
+     ============================================ -->
+
+<section id="about">
+
+  <span class="section-number">01 — about</span>
+
+  <h2 class="about-header reveal">The <em style="font-family:'Playfair Display',serif; font-style:italic;">person</em><br>behind the work</h2>
+
+  <div class="about-grid">
+    <div class="about-main-text reveal reveal-delay-1">
+
+      <!-- PHOTO CUTOUT -->
+      <div class="photo-cutout-wrap">
+        <div class="photo-cutout">
+          <div class="photo-tape"></div>
+          <div class="photo-cutout-inner">
+            <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+              <circle cx="22" cy="16" r="8" stroke="#1a1610" stroke-width="1.5" fill="none"/>
+              <path d="M6 40 C6 30 38 30 38 40" stroke="#1a1610" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+            </svg>
+            <span class="photo-cutout-label">paste your photo<br>here — go on</span>
+          </div>
+        </div>
+        <span class="photo-caption">that's me, apparently</span>
+      </div>
+
+      <p>
+        Suspect:A young 15 building everything brick by brick, unlike Batman who rebuilt. I do sales, I do accounting, I do marketing and I do design as well.
+
+      </p>
+      <p>
+        I sit in the messy middle — <strong>between business and creativity</strong>, between research and execution, between "this is a great idea" and actually shipping it.
+      </p>
+      <p>
+        Most of my work involves figuring out <span class="highlight-yellow">why something isn't working</span>, then redesigning it until it does. Sometimes that's a brand. Sometimes a strategy. Sometimes a website at an odd hour.
+      </p>
+
+      <div style="margin-top: 32px; display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end;">
+        <div style="height: 1px; width: 80px; background: var(--pencil-light);"></div>
+        <div class="string-label wobble">India</div>
+        <div class="string-label wobble">i ain't a techy</div>
+        <div class="string-label wobble">High Schooler</div>
+      </div>
+    </div>
+
+    <div class="sticky-cluster reveal reveal-delay-2">
+
+      <div class="sticky-note wobble" style="position:relative;">
+        <div class="tape-strip"></div>
+        <div class="note-label">currently</div>
+        <p>Building things that make people go "oh, that's actually smart."</p>
+      </div>
+
+      <div class="sticky-note wobble">
+        <div class="note-label">honest take</div>
+        <p>I care more about the thinking behind the work than the work itself. The output is just proof the thinking happened.</p>
+      </div>
+
+      <div class="sticky-note wobble" style="position:relative;">
+        <div class="tape-strip right"></div>
+        <div class="note-label">side note</div>
+        <p>Also reads too many strategy memos at midnight. This is not a problem.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FLOATING MARGIN NOTE -->
+  <div class="floating-sidenote right-edge reveal reveal-delay-3" style="top: 40%; right: 12px; transform: rotate(1deg);">
+    not a morning person but will send you a brief by 9am anyway
+  </div>
+
+</section>
+
+
+<!-- SECTION TRANSITION: TORN EDGE -->
+<div class="torn-edge">
+  <svg viewBox="0 0 1200 30" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="width:100%;display:block;">
+    <path d="M0 0 L40 15 L80 5 L120 20 L170 8 L220 18 L280 6 L340 22 L400 10 L460 24 L520 8 L580 18 L640 4 L700 20 L760 12 L820 22 L880 8 L940 18 L1000 5 L1060 20 L1120 10 L1170 22 L1200 8 L1200 30 L0 30 Z" fill="#f0ebe0"/>
+  </svg>
+</div>
+
+
+<!-- ============================================
+     SKILLS / CRAFT
+     ============================================ -->
+
+<section id="skills">
+
+  <span class="section-number">02 — craft</span>
+
+  <div class="skills-header-block reveal">
+    <div class="skills-big-text">
+      Things I've gotten<br>
+      <span>genuinely good at</span>
+    </div>
+  </div>
+
+  <div class="artifacts-grid">
+
+    <div class="artifact-card reveal reveal-delay-1 wobble">
+      <div class="artifact-label">discipline 01</div>
+      <div class="artifact-title">Market Research</div>
+      <div class="artifact-desc">Finding the signal in all that noise. Primary, secondary, the kind that actually changes what you build.</div>
+      <div class="artifact-doodle">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+          <circle cx="18" cy="18" r="12" stroke="currentColor" stroke-width="2" fill="none"/>
+          <path d="M27 27 L36 36" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="artifact-card reveal reveal-delay-2 wobble">
+      <div class="artifact-label">discipline 02</div>
+      <div class="artifact-title">Business Strategy</div>
+      <div class="artifact-desc">Translating ambiguity into decisions that people can actually act on. The hard part isn't the framework.</div>
+      <div class="artifact-doodle">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+          <path d="M4 36 L12 22 L20 28 L28 14 L36 8" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="artifact-card reveal reveal-delay-3 wobble">
+      <div class="artifact-label">discipline 03</div>
+      <div class="artifact-title">Brand Design</div>
+      <div class="artifact-desc">Not logos. The whole feeling a company gives off before anyone reads a single word.</div>
+      <div class="artifact-doodle">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+          <rect x="8" y="8" width="24" height="24" rx="2" stroke="currentColor" stroke-width="2" fill="none"/>
+          <circle cx="20" cy="20" r="6" fill="currentColor" opacity="0.3"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="artifact-card reveal reveal-delay-1 wobble">
+      <div class="artifact-label">discipline 04</div>
+      <div class="artifact-title">Web Experiences</div>
+      <div class="artifact-desc">HTML, CSS, JS — enough to build the thing I'm designing. The gap between designer and builder is mostly a choice.</div>
+      <div class="artifact-doodle">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+          <path d="M14 14 L8 20 L14 26 M26 14 L32 20 L26 26" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M22 10 L18 30" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="artifact-card reveal reveal-delay-2 wobble">
+      <div class="artifact-label">discipline 05</div>
+      <div class="artifact-title">Creative Direction</div>
+      <div class="artifact-desc">Knowing what something should feel like before the first pixel is placed. The invisible part that makes people notice.</div>
+      <div class="artifact-doodle">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+          <path d="M10 30 Q20 4 30 30" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <circle cx="20" cy="14" r="3" fill="currentColor" opacity="0.4"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="artifact-card reveal reveal-delay-3 wobble">
+      <div class="artifact-label">discipline 06</div>
+      <div class="artifact-title">Product Thinking</div>
+      <div class="artifact-desc">User flows, edge cases, and why that one button placement is actually an ethical decision.</div>
+      <div class="artifact-doodle">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+          <rect x="6" y="6" width="12" height="12" stroke="currentColor" stroke-width="1.5" fill="none"/>
+          <rect x="22" y="6" width="12" height="12" stroke="currentColor" stroke-width="1.5" fill="none"/>
+          <rect x="6" y="22" width="12" height="12" stroke="currentColor" stroke-width="1.5" fill="none"/>
+          <rect x="22" y="22" width="12" height="12" stroke="currentColor" stroke-width="1.5" fill="none"/>
+        </svg>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SIDE NOTE SYSTEM -->
+  <div class="floating-sidenote reveal reveal-delay-4" style="top: 50%; right: 14px; transform: rotate(-2deg);">
+    these aren't job descriptions. they're things I actually do on a tuesday.
+  </div>
+
+</section>
+
+
+<!-- SECTION TRANSITION: PENCIL RULED LINE -->
+<div class="section-break" style="height: 50px;">
+  <svg viewBox="0 0 1200 50" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:50px;display:block;">
+    <line x1="80" y1="25" x2="1180" y2="25" stroke="#1a1610" stroke-width="1" opacity="0.1" stroke-dasharray="8 4"/>
+    <text x="90" y="20" font-family="Caveat" font-size="13" fill="#7a7268" opacity="0.6">§ timeline —</text>
+  </svg>
+</div>
+
+
+<!-- ============================================
+     TIMELINE
+     ============================================ -->
+
+<section id="timeline">
+
+  <span class="section-number">03 — journey</span>
+
+  <h2 class="timeline-header reveal">The <em style="font-family:'Playfair Display',serif;font-style:italic;">path</em> so far</h2>
+
+  <div class="timeline-container">
+    <div class="timeline-path"></div>
+
+    <!-- TIMELINE ITEMS -->
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <span class="timeline-year">2025 — 2025 Dec'</span>
+      <h3 class="timeline-title">Started Casber India</h3>
+      <span class="timeline-org">The first venture with tons of chaos.</span>
+      <p class="timeline-desc">
+      Led operations, experimented with startup processes, clients, marketing all chaos being alone.
+
+
+ Learned sales, marketing, customer outreach, and how real businesses operate outside theory.
+
+ Building Communities
+Expanded entrepreneurial and Discord communities, connecting with founders, students, and professionals.
+      </p>
+      <div class="timeline-scribble-note">this was technically studying but it didn't feel like it</div>
+    </div>
+
+    <div class="timeline-item" style="position: relative;">
+      <div class="timeline-dot"></div>
+      <span class="timeline-year">2025— first contact</span>
+      <h3 class="timeline-title">LiorVille</h3>
+      <span class="timeline-org">A market intelligence company for the MSMEs.</span>
+      <p class="timeline-desc">
+        Started LiorVille Strategize, a youth-led market intelligence and growth venture. Built systems for market research, outreach, operations, and team management while still in school. 
+        Opened recruitment for analysts, researchers, and builders. Learned interviewing, onboarding, delegation, and managing remote contributors.
+      </p>
+      <div class="timeline-scribble-note">almost quit. didn't. good call</div>
+
+      <!-- PINNED PAPER -->
+      <div class="pinned-paper">
+        <p>The first project brief I wrote had 14 typos and the strategy was wrong on page 3.</p>
+      </div>
+    </div>
+
+   
+
+    
+
+    
+
+  </div>
+
+  <!-- SIDENOTE -->
+  <div class="floating-sidenote reveal" style="top: 35%; right: 12px; transform: rotate(1.5deg);">
+    these dates are approximate. memory is a creative act.
+  </div>
+
+</section>
+
+
+<!-- SECTION TRANSITION: STICKY NOTE PEEL -->
+<div class="torn-edge" style="transform: rotate(180deg); margin-bottom: -1px;">
+  <svg viewBox="0 0 1200 30" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="width:100%;display:block;">
+    <path d="M0 0 L40 18 L80 6 L120 22 L170 10 L220 20 L280 7 L340 24 L400 12 L460 26 L520 9 L580 20 L640 5 L700 22 L760 14 L820 24 L880 9 L940 20 L1000 6 L1060 22 L1120 12 L1170 24 L1200 10 L1200 30 L0 30 Z" fill="#ede8db"/>
+  </svg>
+</div>
+
+
+<!-- ============================================
+     PROJECTS
+     ============================================ -->
+
+<section id="projects">
+
+  <span class="section-number">04 — ventures</span>
+
+  <p class="projects-intro reveal">
+    Things I built from scratch, broke a few times, then shipped anyway.
+  </p>
+
+  <div class="case-files">
+
+    <div class="case-file reveal reveal-delay-1">
+  <div class="case-file-inner">
+    <span class="case-tag">2025 Dec' - Ongoing</span>
+    <div class="case-title">LiorVille Strategize</div>
+    <p class="case-desc">
+      A market intel and business strategy venture focused on helping Indian brands understand and enter markets using data-driven research rather than expensive consulting.
+    </p>
+    <div class="case-hidden-note">first client was too humble, a FMCG brand..</div>
+    <a href="https://liorville.framer.website" target="_blank">
+      <span class="case-arrow">↗</span>
+    </a>
+  </div>
+</div>
+
+    <div class="case-file reveal reveal-delay-2">
+      <div class="case-file-inner">
+        <span class="case-tag"></span>
+        <div class="case-title"></div>
+        <p class="case-desc">
+         
+        </p>
+        <div class="case-hidden-note"></div>
+        <span class="case-arrow">↗</span>
+      </div>
+    </div>
+
+    <div class="case-file reveal reveal-delay-3">
+      <div class="case-file-inner">
+        <span class="case-tag"></span>
+        <div class="case-title"></div>
+        <p class="case-desc">
+          
+        </p>
+        <div class="case-hidden-note"></div>
+        <span class="case-arrow">↗</span>
+      </div>
+    </div>
+
+    <div class="case-file reveal reveal-delay-4">
+      <div class="case-file-inner">
+        <span class="case-tag"></span>
+        <div class="case-title"></div>
+        <p class="case-desc">
+         
+        </p>
+        <div class="case-hidden-note"></div>
+        <span class="case-arrow">↗</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SIDENOTE -->
+  <div style="margin-top: 50px; display: flex; align-items: center; gap: 16px;" class="reveal reveal-delay-4">
+    <div style="width: 60px; height: 1px; background: var(--pencil-light);"></div>
+    <p style="font-family: 'Caveat', cursive; font-size: 16px; color: var(--pencil);">more ventures in the works — ask me what's next</p>
+  </div>
+
+</section>
+
+
+<!-- SECTION TRANSITION: INK WAVE -->
+<div class="section-break" style="height: 50px; background: var(--paper-dark);">
+  <svg viewBox="0 0 1200 50" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:50px;display:block;">
+    <path d="M0 25 Q100 5 200 25 Q300 45 400 25 Q500 5 600 25 Q700 45 800 25 Q900 5 1000 25 Q1100 45 1200 25" stroke="#1a1610" stroke-width="0.8" fill="none" opacity="0.12"/>
+  </svg>
+</div>
+
+
+<!-- ============================================
+     CONTACT
+     ============================================ -->
+
+<section id="contact">
+
+  <!-- BIG BACKGROUND TEXT -->
+  <div class="obra-text" style="top: 50%; left: -20px; transform: translateY(-50%); font-size: clamp(100px, 18vw, 260px);">TALK</div>
+
+  <div class="contact-last-page">
+
+    <span class="section-number" style="position:relative;z-index:1;">05 — last page</span>
+
+    <div style="position: relative; z-index: 1; margin-top: 16px;">
+      <div class="contact-big-serif reveal">
+        If something here<br>
+        <strong>made you curious</strong>
+      </div>
+      <p style="font-family: 'DM Sans', sans-serif; font-size: 18px; color: var(--ink-light); font-weight: 300; margin-top: 16px; max-width: 440px; line-height: 1.7;" class="reveal reveal-delay-1">
+        Reach out. I reply to interesting things. I also reply to boring things if they're interesting enough.
+      </p>
+    </div>
+
+    <div class="contact-links reveal reveal-delay-2">
+
+      <a href="mailto:aditya.exec0@gmail.com" class="contact-link-item">
+        <span class="contact-link-label">email</span>
+        <span class="contact-link-value">aditya.exec0@gmail.com</span>
+      </a>
+
+      <div style="width: 1px; height: 40px; background: var(--pencil-light);"></div>
+
+      <a href="https://www.linkedin.com/in/aditya-shaurya-1a4b08343/" class="contact-link-item">
+        <span class="contact-link-label">linkedin</span>
+        <span class="contact-link-value">Aditya Shaurya</span>
+      </a>
+
+      <div style="width: 1px; height: 40px; background: var(--pencil-light);"></div>
+
+      <a href="#" class="contact-link-item">
+        <span class="contact-link-label">instagram</span>
+        <span class="contact-link-value">@quantum.velocity</span>
+      </a>
+
+    </div>
+
+    <!-- FINAL DOODLE ROW -->
+    <div style="margin-top: 60px; display: flex; align-items: center; gap: 20px;" class="reveal reveal-delay-3">
+      <svg width="120" height="40" viewBox="0 0 120 40" fill="none" opacity="0.2">
+        <path d="M8 20 Q30 8 60 22 Q90 36 112 20 M100 12 L112 20 L100 28" stroke="#1a1610" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <p style="font-family: 'Caveat', cursive; font-size: 15px; color: var(--pencil);">— you made it to the end. that means something.</p>
+    </div>
+
+  </div>
+
+  <!-- SIGNOFF CORNER -->
+  <div class="contact-signoff reveal">
+    <p>Aditya Shaurya</p>
+    <div class="signoff-small">powered by Diet Coke<br>(not really, but would love to)</div>
+  </div>
+
+  <!-- FINAL DOODLES -->
+  <div class="final-doodle" style="bottom: 80px; left: 80px;">
+    <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+      <path d="M10 70 Q20 30 40 40 Q60 50 70 10" stroke="#7a7268" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <circle cx="70" cy="10" r="4" fill="#7a7268" opacity="0.4"/>
+      <circle cx="10" cy="70" r="4" fill="#7a7268" opacity="0.4"/>
+    </svg>
+  </div>
+
+  <div class="final-doodle" style="bottom: 40px; right: 200px;">
+    <svg width="100" height="60" viewBox="0 0 100 60" fill="none">
+      <path d="M4 30 Q20 10 40 30 Q60 50 80 30 Q90 22 96 28" stroke="#b0a898" stroke-width="1" fill="none" stroke-dasharray="4 3"/>
+    </svg>
+  </div>
+
+</section>
+
+
+<!-- ============================================
+     JAVASCRIPT
+     ============================================ -->
+
+<script>
+/* CUSTOM CURSOR */
+const cursor = document.getElementById('cursor');
+const trail = document.getElementById('cursorTrail');
+let mouseX = 0, mouseY = 0;
+let trailX = 0, trailY = 0;
+
+document.addEventListener('mousemove', (e) => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+  cursor.style.left = mouseX + 'px';
+  cursor.style.top  = mouseY + 'px';
+});
+
+function animateTrail() {
+  trailX += (mouseX - trailX) * 0.12;
+  trailY += (mouseY - trailY) * 0.12;
+  trail.style.left = trailX + 'px';
+  trail.style.top  = trailY + 'px';
+  requestAnimationFrame(animateTrail);
+}
+animateTrail();
+
+document.querySelectorAll('a, button, .sticky-note, .artifact-card, .case-file-inner, .nav-link').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.width  = '20px';
+    cursor.style.height = '20px';
+    cursor.style.opacity = '0.5';
+  });
+  el.addEventListener('mouseleave', () => {
+    cursor.style.width  = '12px';
+    cursor.style.height = '12px';
+    cursor.style.opacity = '1';
+  });
+});
+
+
+/* SCROLL REVEAL */
+const revealEls = document.querySelectorAll('.reveal, .timeline-item');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+revealEls.forEach(el => observer.observe(el));
+
+
+/* PROGRESS DOTS */
+const sections = ['hero', 'about', 'skills', 'timeline', 'projects', 'contact'];
+const dots = document.querySelectorAll('.progress-dot');
+
+function updateProgress() {
+  const scrollY = window.scrollY;
+  const winH = window.innerHeight;
+
+  sections.forEach((id, i) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    if (rect.top <= winH * 0.5 && rect.bottom > winH * 0.5) {
+      dots.forEach(d => d.classList.remove('active'));
+      if (dots[i]) dots[i].classList.add('active');
+    }
+  });
+}
+
+window.addEventListener('scroll', updateProgress, { passive: true });
+
+
+/* PARALLAX DOODLES (subtle) */
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  const doodles = document.querySelectorAll('.hero-doodle');
+  doodles.forEach((d, i) => {
+    const speed = 0.08 + (i * 0.03);
+    d.style.transform = `translateY(${scrollY * speed}px)`;
+  });
+}, { passive: true });
+
+
+/* STICKY NOTES RANDOM WOBBLE on load */
+document.querySelectorAll('.sticky-note').forEach((note, i) => {
+  const r = (Math.random() - 0.5) * 3;
+  note.style.setProperty('--init-rot', r + 'deg');
+});
+
+
+/* TIMELINE PATH DRAW ON SCROLL */
+(function() {
+  const path = document.querySelector('.timeline-path');
+  if (!path) return;
+  const startObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        path.style.borderImage = 'none';
+        path.style.animation = 'growPath 1.5s ease forwards';
+      }
+    });
+  }, { threshold: 0.1 });
+  startObserver.observe(document.getElementById('timeline'));
+})();
+
+
+/* ARTIFACT CARDS — doodle wiggle on hover */
+document.querySelectorAll('.artifact-card').forEach(card => {
+  card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 6;
+    const y = ((e.clientY - rect.top) / rect.height - 0.5) * 6;
+    const r = card.classList.contains('nth-odd') ? -0.5 : 0.5;
+    card.style.transform = `rotate(${r + x * 0.3}deg) translateY(${-y * 0.4}px)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    const i = [...card.parentNode.children].indexOf(card);
+    card.style.transform = i % 2 === 0 ? 'rotate(-0.5deg)' : 'rotate(0.5deg)';
+  });
+});
+
+
+/* SCRIBBLE EFFECT on section headers */
+document.querySelectorAll('.about-header, .timeline-header').forEach(h => {
+  h.innerHTML = h.innerHTML; // ensure painted
+});
+
+
+/* PAGE LOAD — hide cursor until mouse moved */
+cursor.style.opacity = '0';
+trail.style.opacity = '0';
+document.addEventListener('mousemove', () => {
+  cursor.style.opacity = '1';
+  trail.style.opacity = '1';
+}, { once: true });
+
+</script>
+
+</body>
+</html>
